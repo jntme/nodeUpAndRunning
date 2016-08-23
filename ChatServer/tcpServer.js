@@ -1,10 +1,11 @@
 var net = require('net');
+var chalk = require('chalk');
 
 var tcpServer = net.createServer();
 var clientList = [];
 
 tcpServer.on('connection', function(client) {
-    console.log("Client " + client.remoteAddress + " connected on port " + client.remotePort  +".");
+    console.log(chalk.green("Client " + client.remoteAddress + " connected on port " + client.remotePort  +"."));
     client.name = client.remoteAddress + ":" + client.remotePort;
 
     client.write("Welcome fellow! \n");
@@ -28,18 +29,18 @@ function broadcast(string, client) {
         if(clientList[i] !== client) {
             // destroy and remember client if not writable anymore
             if(!clientList[i].writable) {
-                client.destroy();
-                clientsToRemove.push(client);
+                clientList[i].destroy();
+                clientsToRemove.push(clientList[i]);
             }
             else 
-            clientList[i].write(client.name + ": \t" + string);
+                clientList[i].write(chalk.gray(client.name + ": \t" + string));
         }
     }
 
     //remove all clients that are no longer active
     for(var x=0; x<clientsToRemove.length;x++) {
-        clientList.splice(clientsToRemove[x]);
-        console.log("Removed client " + client.name);
+        var nameOfRemovingClient = clientsToRemove[x].name;
+        clientList.splice(clientsToRemove[x], 1);
     }
 }
 
