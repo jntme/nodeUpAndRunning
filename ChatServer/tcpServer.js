@@ -29,7 +29,6 @@ tcpServer.on('connection', function(client) {
 function broadcast(string, client) {
 
     var clientsToRemove = [];
-    console.log(clientsToRemove.length);
 
     for(var i=0; i < clientList.length;i++) {
         if(clientList[i] !== client) {
@@ -47,9 +46,7 @@ function broadcast(string, client) {
 
     //remove all clients that are no longer active
     for(var x=0; x<clientsToRemove.length;x++) {
-        var nameOfRemovingClient = clientsToRemove[x].name;
         clientList.splice(clientsToRemove[x], 1);
-        console.log(nameOfRemovingClient + " disconnected.");
     }
 }
 
