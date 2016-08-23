@@ -18,16 +18,24 @@ tcpServer.on('connection', function(client) {
     client.on('error', function(e) {
         console.error(e);
     });
+
+    client.on('end', function() {
+        console.log(client.name + " quit.");
+        clientList.splice(clientList.indexOf(client), 1);
+    });
     
 });
 
 function broadcast(string, client) {
 
     var clientsToRemove = [];
+    console.log(clientsToRemove.length);
 
     for(var i=0; i < clientList.length;i++) {
         if(clientList[i] !== client) {
             // destroy and remember client if not writable anymore
+            // TODO the whole 'delete when offline' could possibly be done better
+            // through a event on the socket
             if(!clientList[i].writable) {
                 clientList[i].destroy();
                 clientsToRemove.push(clientList[i]);
@@ -41,6 +49,7 @@ function broadcast(string, client) {
     for(var x=0; x<clientsToRemove.length;x++) {
         var nameOfRemovingClient = clientsToRemove[x].name;
         clientList.splice(clientsToRemove[x], 1);
+        console.log(nameOfRemovingClient + " disconnected.");
     }
 }
 
