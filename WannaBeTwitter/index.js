@@ -12,7 +12,7 @@ app.listen(3000);
 var tweets = [];
 
 app.get('/', function(req, res){
-  res.send('Say hello to my twitter app! :)');
+  res.send('Say hello to my twitter app!');
 });
 
 app.post('/send', urlencodedParser, function(req, res) {
