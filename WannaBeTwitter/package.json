@@ -1,0 +1,17 @@
+{
+  "name": "wannabetwitter",
+  "version": "1.0.0",
+  "description": "A primitive twitter clone.",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "test": "node test.js"
+  },
+  "author": "Jonathan Meier <seed@bananatreedad.ch>",
+  "license": "MIT"
+}
